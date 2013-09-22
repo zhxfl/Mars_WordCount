@@ -74,14 +74,14 @@ int main( int argc, char** argv)
 	TimeVal_t preTimer;
 	startTimer(&preTimer);
 
-	printf("path = %s\n", argv[1]);
 	FILE* fp = fopen(argv[1], "r");
 	fseek(fp, 0, SEEK_END);
-	int fileSize = ftell(fp) + 1;
+	size_t fileSize = ftell(fp) + 1;
 	rewind(fp);
 	char* h_filebuf = (char*)malloc(fileSize + 1);
 	char* d_filebuf = NULL;
-	fread(h_filebuf, fileSize, 1, fp);
+	size_t tmp = fread(h_filebuf, fileSize, 1, fp);
+
 	checkCudaErrors(cudaMalloc((void**)&d_filebuf, fileSize));
 	fclose(fp);
 
@@ -97,7 +97,6 @@ int main( int argc, char** argv)
 	char* start = h_filebuf;
 	while (1)
 	{
-		printf("%d \n", 1);
 		int blockSize = 2048;
 		if (offset + blockSize > fileSize) blockSize = fileSize - offset;
 		p += blockSize;
@@ -124,6 +123,7 @@ int main( int argc, char** argv)
 			break;
 		}
 	}
+
 	checkCudaErrors(cudaMemcpy(d_filebuf, h_filebuf, fileSize, cudaMemcpyHostToDevice));
 	endTimer("preprocess", &preTimer);
 	//----------------------------------------------

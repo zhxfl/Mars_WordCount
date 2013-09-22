@@ -1,8 +1,8 @@
-DATA=../data/input
-echo "======================run debug=============================="
-cd Debug
-optirun ./WordCount $DATA
-cd ..
+DATA=../data/input_1
+#echo "======================run debug=============================="
+#cd Debug
+#optirun ./WordCount $DATA
+#cd ..
 
 echo "======================run release============================"
 

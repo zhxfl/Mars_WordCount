@@ -46,11 +46,11 @@ __device__ void MAP_COUNT_FUNC//(void *key, void *val, size_t keySize, size_t va
 		++p;
 		++lsize;
 		wsize = (int)(p - start);
-		if (wsize > 6)
-		{
+		//if (wsize > 6)
+		//{
 			//printf("%s, wsize:%d\n", start, wsize);	
 			EMIT_INTER_COUNT_FUNC(wsize, sizeof(int));
-		}
+		//}
 		for (; (lsize < line_size) && (*p < 'A' || *p > 'Z'); p++, lsize++);
 		if (lsize >= line_size) break;
 		start = p;
@@ -80,11 +80,11 @@ __device__ void MAP_FUNC//(void *key, void val, size_t keySize, size_t valSize)
 		wsize = (int)(p - start);
 		int* o_val = (int*)GET_OUTPUT_BUF(0);
 		*o_val = wsize;
-		if (wsize > 6) 
-		{
+		//if (wsize > 6)
+		//{
 			//printf("%s, %d\n", start, wsize);	
 			EMIT_INTERMEDIATE_FUNC(start, o_val, wsize, sizeof(int));
-		}
+		//}
 		for (; (lsize < line_size) && (*p < 'A' || *p > 'Z'); p++, lsize++);
 		if (lsize >= line_size) break;
 		start = p;	

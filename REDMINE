@@ -1,2 +1,2 @@
 1 compile by cuda-5.5
-2 use the cuda/sample/common code
+2 use the cuda/sample/common code, when you use nsight to compile the project, remember to include path = ~/cuda/sample/common/include
