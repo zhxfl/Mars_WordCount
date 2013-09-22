@@ -79,7 +79,7 @@ int main( int argc, char** argv)
 	fseek(fp, 0, SEEK_END);
 	int fileSize = ftell(fp) + 1;
 	rewind(fp);
-	char* h_filebuf = (char*)malloc(fileSize);
+	char* h_filebuf = (char*)malloc(fileSize + 1);
 	char* d_filebuf = NULL;
 	fread(h_filebuf, fileSize, 1, fp);
 	checkCudaErrors(cudaMalloc((void**)&d_filebuf, fileSize));
@@ -144,7 +144,7 @@ int main( int argc, char** argv)
 	//----------------------------------------------
 	FinishMapReduce(spec);
 	cudaFree(d_filebuf);
-	free(h_filebuf);
-
+	if(h_filebuf)
+		free(h_filebuf);
 	return 0;
 }
